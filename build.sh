@@ -7,7 +7,7 @@ cd "$(dirname "$0")"
 BODY="$(pandoc README.md \
   --from markdown+smart \
   --to html5 \
-  --syntax-highlighting=none)"
+  --syntax-highlighting=none | python3 postprocess_tables.py)"
 
 cat > index.html <<HTML
 <!DOCTYPE html>
@@ -91,13 +91,27 @@ footer{
 }
 @media (max-width:34rem){
   main{padding:3rem 1.2rem 4rem}
-  /* Compress instead of scrolling. A horizontally scrolled comparison table
-     hid the OWA column entirely on a 390px phone, which defeats the point of
-     a CWA-vs-OWA table. Rows get taller; nothing is hidden. */
-  table{table-layout:fixed; width:100%; font-size:.8rem}
-  th,td{padding:.5rem .45rem; overflow-wrap:break-word}
-  th{font-size:.68rem; letter-spacing:.04em}
-  th:first-child, td:first-child{width:27%}
+  /* Stack each table row into a labelled card. Horizontal scroll hid the OWA
+     column; fixed-width compression crushed it to ~5/10 readability. Stacking
+     keeps every value visible at full text size. data-label comes from
+     postprocess_tables.py — markdown tables cannot emit it themselves. */
+  table{display:block; width:100%; margin:1.6rem 0}
+  thead{display:none}
+  tbody,tbody tr,tbody td{display:block; width:auto}
+  tbody tr{
+    border:1px solid var(--rule); border-radius:6px;
+    margin:0 0 .9rem; padding:.55rem .8rem .6rem; background:var(--quote);
+  }
+  tbody td{border:0; padding:.3rem 0 .35rem; font-size:.95rem}
+  tbody td::before{
+    content:attr(data-label); display:block; margin-bottom:.1rem;
+    font-size:.66rem; font-weight:600; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--accent);
+    font-family:ui-sans-serif,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  /* first cell is the row's name — it heads the card, so no label above it */
+  tbody td:first-child{padding-top:0; font-weight:600; font-size:1rem}
+  tbody td:first-child::before{content:none}
 }
 @media print{
   :root{--paper:#fff; --ink:#000; --muted:#555; --accent:#333; --quote:#f5f5f5}

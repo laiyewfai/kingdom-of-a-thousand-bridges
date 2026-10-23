@@ -79,13 +79,27 @@ footer{
 }
 @media (max-width:34rem){
   main{padding:3rem 1.2rem 4rem}
-  /* Compress instead of scrolling. A horizontally scrolled comparison table
-     hid the OWA column entirely on a 390px phone, which defeats the point of
-     a CWA-vs-OWA table. Rows get taller; nothing is hidden. */
-  table{table-layout:fixed; width:100%; font-size:.8rem}
-  th,td{padding:.5rem .45rem; overflow-wrap:break-word}
-  th{font-size:.68rem; letter-spacing:.04em}
-  th:first-child, td:first-child{width:27%}
+  /* Stack each table row into a labelled card. Horizontal scroll hid the OWA
+     column; fixed-width compression crushed it to ~5/10 readability. Stacking
+     keeps every value visible at full text size. data-label comes from
+     postprocess_tables.py — markdown tables cannot emit it themselves. */
+  table{display:block; width:100%; margin:1.6rem 0}
+  thead{display:none}
+  tbody,tbody tr,tbody td{display:block; width:auto}
+  tbody tr{
+    border:1px solid var(--rule); border-radius:6px;
+    margin:0 0 .9rem; padding:.55rem .8rem .6rem; background:var(--quote);
+  }
+  tbody td{border:0; padding:.3rem 0 .35rem; font-size:.95rem}
+  tbody td::before{
+    content:attr(data-label); display:block; margin-bottom:.1rem;
+    font-size:.66rem; font-weight:600; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--accent);
+    font-family:ui-sans-serif,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  /* first cell is the row's name — it heads the card, so no label above it */
+  tbody td:first-child{padding-top:0; font-weight:600; font-size:1rem}
+  tbody td:first-child::before{content:none}
 }
 @media print{
   :root{--paper:#fff; --ink:#000; --muted:#555; --accent:#333; --quote:#f5f5f5}
@@ -404,29 +418,29 @@ Assumption.</p>
 </thead>
 <tbody>
 <tr>
-<td>Fundamental principle</td>
-<td>An unrecorded fact may be treated as false within a defined,
+<td data-label="Dimension">Fundamental principle</td>
+<td data-label="Closed-World Assumption (CWA)">An unrecorded fact may be treated as false within a defined,
 complete domain</td>
-<td>An unrecorded fact remains unknown</td>
+<td data-label="Open-World Assumption (OWA)">An unrecorded fact remains unknown</td>
 </tr>
 <tr>
-<td>Typical application</td>
-<td>Transaction databases, complete operational inventories, closed rule
+<td data-label="Dimension">Typical application</td>
+<td data-label="Closed-World Assumption (CWA)">Transaction databases, complete operational inventories, closed rule
 systems</td>
-<td>Semantic Web, knowledge representation, incomplete knowledge
+<td data-label="Open-World Assumption (OWA)">Semantic Web, knowledge representation, incomplete knowledge
 domains</td>
 </tr>
 <tr>
-<td>Primary risk</td>
-<td>Mistaking missing information for a negative fact</td>
-<td>Difficulty drawing definitive conclusions from incomplete
+<td data-label="Dimension">Primary risk</td>
+<td data-label="Closed-World Assumption (CWA)">Mistaking missing information for a negative fact</td>
+<td data-label="Open-World Assumption (OWA)">Difficulty drawing definitive conclusions from incomplete
 knowledge</td>
 </tr>
 <tr>
-<td>Example</td>
-<td>No payment record means no payment was recorded in a complete
+<td data-label="Dimension">Example</td>
+<td data-label="Closed-World Assumption (CWA)">No payment record means no payment was recorded in a complete
 ledger</td>
-<td>No recorded bridge defect does not prove there is no defect</td>
+<td data-label="Open-World Assumption (OWA)">No recorded bridge defect does not prove there is no defect</td>
 </tr>
 </tbody>
 </table>
@@ -535,19 +549,19 @@ circumstances should we stop believing them?”</p>
 </thead>
 <tbody>
 <tr>
-<td>1</td>
-<td>Information Retrieval</td>
-<td>What information is available?</td>
+<td data-label="Level">1</td>
+<td data-label="Capability">Information Retrieval</td>
+<td data-label="Central question">What information is available?</td>
 </tr>
 <tr>
-<td>2</td>
-<td>Knowledge Representation</td>
-<td>How are facts and entities related?</td>
+<td data-label="Level">2</td>
+<td data-label="Capability">Knowledge Representation</td>
+<td data-label="Central question">How are facts and entities related?</td>
 </tr>
 <tr>
-<td>3</td>
-<td>Epistemic Reasoning and Governance</td>
-<td>Why should we trust a conclusion, and when should it be
+<td data-label="Level">3</td>
+<td data-label="Capability">Epistemic Reasoning and Governance</td>
+<td data-label="Central question">Why should we trust a conclusion, and when should it be
 reconsidered?</td>
 </tr>
 </tbody>
