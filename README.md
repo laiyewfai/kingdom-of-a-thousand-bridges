@@ -499,3 +499,7 @@ He embraced the web because he believed that connecting knowledge would reveal t
 But he became wise only when he understood that even the most sophisticated knowledge system must remain open to uncertainty, contradiction, and revision.
 
 A truly intelligent system is not one that always has an answer. It is one that knows what justifies its answer, recognizes the boundaries of its knowledge, and can change its conclusions when the evidence changes.
+
+---
+
+*© 2026 Lai Yew Fai. Licensed under [CC BY-NC 4.0](LICENSE.md) — share and adapt freely for non-commercial use, with attribution.*

@@ -107,7 +107,7 @@ ${BODY}
 </main>
 <footer>
   <p>The Kingdom of a Thousand Bridges — a fable about knowledge, judgment, and truth.</p>
-  <p><a href="https://github.com/laiyewfai/kingdom-of-a-thousand-bridges">Source on GitHub</a></p>
+  <p>© 2026 Lai Yew Fai · <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a> · <a href="https://github.com/laiyewfai/kingdom-of-a-thousand-bridges">Source on GitHub</a></p>
 </footer>
 </body>
 </html>
