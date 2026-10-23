@@ -43,11 +43,11 @@ body{
 main{max-width:40rem; margin:0 auto; padding:5rem 1.5rem 7rem}
 h1{
   font-size:clamp(1.9rem,5vw,2.9rem); line-height:1.15; font-weight:600;
-  letter-spacing:-.02em; margin:0 0 .6rem; text-align:center;
+  letter-spacing:-.02em; margin:0 0 .6rem; text-align:center; text-wrap:balance;
 }
 h1 + h3{
   font-size:1.02rem; font-weight:400; font-style:italic; color:var(--muted);
-  text-align:center; margin:0 0 3.5rem; letter-spacing:.01em;
+  text-align:center; margin:0 0 3.5rem; letter-spacing:.01em; text-wrap:balance;
 }
 h2{
   font-size:.82rem; font-weight:600; text-transform:uppercase;
@@ -91,8 +91,13 @@ footer{
 }
 @media (max-width:34rem){
   main{padding:3rem 1.2rem 4rem}
-  table{display:block; overflow-x:auto; white-space:nowrap}
-  th,td{white-space:normal; min-width:11rem}
+  /* Compress instead of scrolling. A horizontally scrolled comparison table
+     hid the OWA column entirely on a 390px phone, which defeats the point of
+     a CWA-vs-OWA table. Rows get taller; nothing is hidden. */
+  table{table-layout:fixed; width:100%; font-size:.8rem}
+  th,td{padding:.5rem .45rem; overflow-wrap:break-word}
+  th{font-size:.68rem; letter-spacing:.04em}
+  th:first-child, td:first-child{width:27%}
 }
 @media print{
   :root{--paper:#fff; --ink:#000; --muted:#555; --accent:#333; --quote:#f5f5f5}
