@@ -1,13 +1,19 @@
 #!/bin/bash
-# Build index.html from README.md so the prose lives in exactly one place.
+# Build index.html from README.md (English) + README.zh.md (Chinese).
+# Each language lives in exactly one file; this script only assembles them.
 # Requires: pandoc (brew install pandoc)
 set -eu
 cd "$(dirname "$0")"
 
-BODY="$(pandoc README.md \
-  --from markdown+smart \
-  --to html5 \
-  --syntax-highlighting=none | python3 postprocess_tables.py)"
+render() { # render <markdown file>
+  pandoc "$1" \
+    --from markdown+smart \
+    --to html5 \
+    --syntax-highlighting=none | python3 postprocess_tables.py
+}
+
+BODY_EN="$(render README.md)"
+BODY_ZH="$(render README.zh.md)"
 
 cat > index.html <<HTML
 <!DOCTYPE html>
@@ -16,7 +22,7 @@ cat > index.html <<HTML
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Kingdom of a Thousand Bridges — A Fable About Knowledge, Judgment, and Truth</title>
-<meta name="description" content="A fable about knowledge, judgment, and truth — and the graduate-level concepts behind it: epistemic reasoning, knowledge provenance, and the open-world assumption in knowledge graphs.">
+<meta name="description" content="A fable about knowledge, judgment, and truth — and the graduate-level concepts behind it: epistemic reasoning, knowledge provenance, and the open-world assumption in knowledge graphs. Available in English and Chinese.">
 <meta property="og:title" content="The Kingdom of a Thousand Bridges">
 <meta property="og:description" content="A fable about knowledge, judgment, and truth — and the knowledge-graph concepts behind it.">
 <meta property="og:type" content="article">
@@ -34,31 +40,63 @@ cat > index.html <<HTML
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
+/* language switching — mirrors the Tao De Jing almanac: one class per language */
+html[lang="zh"] .len{display:none}
+html[lang="en"] .lzh{display:none}
 body{
   margin:0; background:var(--paper); color:var(--ink);
   font-family:ui-serif,Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;
   font-size:1.0625rem; line-height:1.72; text-rendering:optimizeLegibility;
   -webkit-font-smoothing:antialiased;
 }
-main{max-width:40rem; margin:0 auto; padding:5rem 1.5rem 7rem}
+.lzh{
+  font-family:"Songti SC","Noto Serif SC","Source Han Serif SC","STSong",
+              ui-serif,Georgia,serif;
+  line-height:1.95;
+}
+main{max-width:40rem; margin:0 auto; padding:2.5rem 1.5rem 7rem}
+.topbar{
+  display:flex; justify-content:flex-end; align-items:center;
+  margin:0 0 1.6rem;
+}
+.lang-switch{
+  display:inline-flex; border:1px solid var(--accent); border-radius:22px;
+  overflow:hidden; background:var(--quote);
+}
+.lang-switch button{
+  font-family:ui-sans-serif,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  font-size:.78rem; letter-spacing:.06em; color:var(--muted);
+  background:transparent; border:none; padding:0 1.1rem; cursor:pointer;
+  /* 44px minimum tap target; a 30px pill failed that on mobile */
+  display:inline-flex; align-items:center; justify-content:center;
+  min-height:44px;
+  transition:background .2s, color .2s;
+}
+.lang-switch button + button{border-left:1px solid var(--rule)}
+.lang-switch button.active{background:var(--accent); color:var(--paper)}
+.lang-switch button:not(.active):hover{color:var(--accent)}
+.lang-switch button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
 h1{
   font-size:clamp(1.9rem,5vw,2.9rem); line-height:1.15; font-weight:600;
   letter-spacing:-.02em; margin:0 0 .6rem; text-align:center; text-wrap:balance;
 }
+.lzh h1{letter-spacing:.04em}
 h1 + h3{
   font-size:1.02rem; font-weight:400; font-style:italic; color:var(--muted);
   text-align:center; margin:0 0 3.5rem; letter-spacing:.01em; text-wrap:balance;
 }
+.lzh h1 + h3{font-style:normal; letter-spacing:.12em}
 h2{
   font-size:.82rem; font-weight:600; text-transform:uppercase;
   letter-spacing:.16em; color:var(--accent); text-align:center;
   margin:4.5rem 0 2.2rem; padding-top:2.2rem; border-top:1px solid var(--rule);
 }
+.lzh h2{letter-spacing:.18em; font-size:.92rem}
 h3{font-size:1.12rem; font-weight:600; margin:2.8rem 0 .8rem; letter-spacing:-.01em}
 p{margin:0 0 1.25rem}
 hr{border:0; border-top:1px solid var(--rule); margin:4rem 0}
-/* the fable opens with a drop cap; scripts and long words stay inside the measure */
-main > p:first-of-type::first-letter{
+/* the English fable opens with a drop cap; CJK has no drop-cap tradition */
+.len > p:first-of-type::first-letter{
   float:left; font-size:3.6rem; line-height:.82; padding:.1rem .55rem 0 0;
   font-weight:600; color:var(--accent);
 }
@@ -67,6 +105,7 @@ blockquote{
   border-left:3px solid var(--accent); border-radius:0 4px 4px 0;
   font-style:italic; color:var(--ink);
 }
+.lzh blockquote{font-style:normal}   /* synthetic oblique ruins CJK glyphs */
 blockquote p{margin:0}
 blockquote p + p{margin-top:.8rem}
 strong{font-weight:600}
@@ -90,7 +129,7 @@ footer{
   font-size:.82rem; color:var(--muted);
 }
 @media (max-width:34rem){
-  main{padding:3rem 1.2rem 4rem}
+  main{padding:1.6rem 1.2rem 4rem}
   /* Stack each table row into a labelled card. Horizontal scroll hid the OWA
      column; fixed-width compression crushed it to ~5/10 readability. Stacking
      keeps every value visible at full text size. data-label comes from
@@ -117,17 +156,57 @@ footer{
   :root{--paper:#fff; --ink:#000; --muted:#555; --accent:#333; --quote:#f5f5f5}
   main{padding:0; max-width:none}
   h2{page-break-after:avoid}
+  .topbar{display:none}
 }
 </style>
 </head>
 <body>
 <main>
-${BODY}
+<div class="topbar">
+  <div class="lang-switch" role="group" aria-label="Language / 语言">
+    <button type="button" data-lang="en" aria-label="English">EN</button>
+    <button type="button" data-lang="zh" aria-label="中文">中</button>
+  </div>
+</div>
+
+<div class="len" lang="en">
+${BODY_EN}
+</div>
+
+<div class="lzh" lang="zh-Hans">
+${BODY_ZH}
+</div>
 </main>
 <footer>
-  <p>The Kingdom of a Thousand Bridges — a fable about knowledge, judgment, and truth.</p>
-  <p>© 2026 Lai Yew Fai · <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a> · <a href="https://github.com/laiyewfai/kingdom-of-a-thousand-bridges">Source on GitHub</a></p>
+  <p class="len">The Kingdom of a Thousand Bridges — a fable about knowledge, judgment, and truth.</p>
+  <p class="lzh">千桥之国 —— 一则关于知识、判断与真相的寓言。</p>
+  <p class="len">© 2026 Lai Yew Fai · <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a> · <a href="https://github.com/laiyewfai/kingdom-of-a-thousand-bridges">Source on GitHub</a></p>
+  <p class="lzh">© 2026 Lai Yew Fai · <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a> · <a href="https://github.com/laiyewfai/kingdom-of-a-thousand-bridges">GitHub 源码</a></p>
 </footer>
+<script>
+  var root = document.documentElement;
+  var buttons = document.querySelectorAll('.lang-switch button');
+  var TITLES = {
+    en: 'The Kingdom of a Thousand Bridges — A Fable About Knowledge, Judgment, and Truth',
+    zh: '千桥之国 —— 一则关于知识、判断与真相的寓言'
+  };
+  function applyLang(lang) {
+    root.lang = lang;
+    document.title = TITLES[lang] || TITLES.en;
+    buttons.forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+  }
+  var saved = null;
+  try { saved = localStorage.getItem('kingdom-lang'); } catch (e) {}
+  applyLang(saved === 'zh' ? 'zh' : 'en');
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      applyLang(b.getAttribute('data-lang'));
+      try { localStorage.setItem('kingdom-lang', root.lang); } catch (e) {}
+    });
+  });
+</script>
 </body>
 </html>
 HTML

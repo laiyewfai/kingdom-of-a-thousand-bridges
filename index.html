@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Kingdom of a Thousand Bridges — A Fable About Knowledge, Judgment, and Truth</title>
-<meta name="description" content="A fable about knowledge, judgment, and truth — and the graduate-level concepts behind it: epistemic reasoning, knowledge provenance, and the open-world assumption in knowledge graphs.">
+<meta name="description" content="A fable about knowledge, judgment, and truth — and the graduate-level concepts behind it: epistemic reasoning, knowledge provenance, and the open-world assumption in knowledge graphs. Available in English and Chinese.">
 <meta property="og:title" content="The Kingdom of a Thousand Bridges">
 <meta property="og:description" content="A fable about knowledge, judgment, and truth — and the knowledge-graph concepts behind it.">
 <meta property="og:type" content="article">
@@ -22,31 +22,63 @@
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
+/* language switching — mirrors the Tao De Jing almanac: one class per language */
+html[lang="zh"] .len{display:none}
+html[lang="en"] .lzh{display:none}
 body{
   margin:0; background:var(--paper); color:var(--ink);
   font-family:ui-serif,Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;
   font-size:1.0625rem; line-height:1.72; text-rendering:optimizeLegibility;
   -webkit-font-smoothing:antialiased;
 }
-main{max-width:40rem; margin:0 auto; padding:5rem 1.5rem 7rem}
+.lzh{
+  font-family:"Songti SC","Noto Serif SC","Source Han Serif SC","STSong",
+              ui-serif,Georgia,serif;
+  line-height:1.95;
+}
+main{max-width:40rem; margin:0 auto; padding:2.5rem 1.5rem 7rem}
+.topbar{
+  display:flex; justify-content:flex-end; align-items:center;
+  margin:0 0 1.6rem;
+}
+.lang-switch{
+  display:inline-flex; border:1px solid var(--accent); border-radius:22px;
+  overflow:hidden; background:var(--quote);
+}
+.lang-switch button{
+  font-family:ui-sans-serif,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  font-size:.78rem; letter-spacing:.06em; color:var(--muted);
+  background:transparent; border:none; padding:0 1.1rem; cursor:pointer;
+  /* 44px minimum tap target; a 30px pill failed that on mobile */
+  display:inline-flex; align-items:center; justify-content:center;
+  min-height:44px;
+  transition:background .2s, color .2s;
+}
+.lang-switch button + button{border-left:1px solid var(--rule)}
+.lang-switch button.active{background:var(--accent); color:var(--paper)}
+.lang-switch button:not(.active):hover{color:var(--accent)}
+.lang-switch button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
 h1{
   font-size:clamp(1.9rem,5vw,2.9rem); line-height:1.15; font-weight:600;
   letter-spacing:-.02em; margin:0 0 .6rem; text-align:center; text-wrap:balance;
 }
+.lzh h1{letter-spacing:.04em}
 h1 + h3{
   font-size:1.02rem; font-weight:400; font-style:italic; color:var(--muted);
   text-align:center; margin:0 0 3.5rem; letter-spacing:.01em; text-wrap:balance;
 }
+.lzh h1 + h3{font-style:normal; letter-spacing:.12em}
 h2{
   font-size:.82rem; font-weight:600; text-transform:uppercase;
   letter-spacing:.16em; color:var(--accent); text-align:center;
   margin:4.5rem 0 2.2rem; padding-top:2.2rem; border-top:1px solid var(--rule);
 }
+.lzh h2{letter-spacing:.18em; font-size:.92rem}
 h3{font-size:1.12rem; font-weight:600; margin:2.8rem 0 .8rem; letter-spacing:-.01em}
 p{margin:0 0 1.25rem}
 hr{border:0; border-top:1px solid var(--rule); margin:4rem 0}
-/* the fable opens with a drop cap; scripts and long words stay inside the measure */
-main > p:first-of-type::first-letter{
+/* the English fable opens with a drop cap; CJK has no drop-cap tradition */
+.len > p:first-of-type::first-letter{
   float:left; font-size:3.6rem; line-height:.82; padding:.1rem .55rem 0 0;
   font-weight:600; color:var(--accent);
 }
@@ -55,6 +87,7 @@ blockquote{
   border-left:3px solid var(--accent); border-radius:0 4px 4px 0;
   font-style:italic; color:var(--ink);
 }
+.lzh blockquote{font-style:normal}   /* synthetic oblique ruins CJK glyphs */
 blockquote p{margin:0}
 blockquote p + p{margin-top:.8rem}
 strong{font-weight:600}
@@ -78,7 +111,7 @@ footer{
   font-size:.82rem; color:var(--muted);
 }
 @media (max-width:34rem){
-  main{padding:3rem 1.2rem 4rem}
+  main{padding:1.6rem 1.2rem 4rem}
   /* Stack each table row into a labelled card. Horizontal scroll hid the OWA
      column; fixed-width compression crushed it to ~5/10 readability. Stacking
      keeps every value visible at full text size. data-label comes from
@@ -105,11 +138,20 @@ footer{
   :root{--paper:#fff; --ink:#000; --muted:#555; --accent:#333; --quote:#f5f5f5}
   main{padding:0; max-width:none}
   h2{page-break-after:avoid}
+  .topbar{display:none}
 }
 </style>
 </head>
 <body>
 <main>
+<div class="topbar">
+  <div class="lang-switch" role="group" aria-label="Language / 语言">
+    <button type="button" data-lang="en" aria-label="English">EN</button>
+    <button type="button" data-lang="zh" aria-label="中文">中</button>
+  </div>
+</div>
+
+<div class="len" lang="en">
 <h1 id="the-kingdom-of-a-thousand-bridges">The Kingdom of a Thousand
 Bridges</h1>
 <h3 id="a-fable-about-knowledge-judgment-and-truth">A Fable About
@@ -596,10 +638,395 @@ changes.</p>
 <p><em>© 2026 Lai Yew Fai. Licensed under <a href="LICENSE.md">CC BY-NC
 4.0</a> — share and adapt freely for non-commercial use, with
 attribution.</em></p>
+</div>
+
+<div class="lzh" lang="zh-Hans">
+<h1 id="千桥之国">千桥之国</h1>
+<h3
+id="一则关于知识判断与真相的寓言">一则关于知识、判断与真相的寓言</h3>
+<p>很久以前，有一个王国，叫做千桥之国。</p>
+<p>这个王国恰好有一千座桥。</p>
+<p>有的是石桥，有的是木桥、铁桥，还有一些是横跨深谷的悬索桥。每一座桥都有自己的历史。有的已经站了三百年，有的才刚刚建成。</p>
+<p>但国王最引以为傲的，并不是他的桥。</p>
+<p>而是王宫里那座宏伟的藏书楼。</p>
+<p>藏书楼里存放着历任桥梁总工程师的设计图纸、养护记录、匠人手记、事故报告和私人日记。</p>
+<p>国王常说：</p>
+<blockquote>
+<p>「只要我们把知识全部保存下来，就永远不会重犯过去的错误。」</p>
+</blockquote>
+<p>直到有一天，一座桥塌了。</p>
+<h2 id="第一章-最博学的图书官">第一章　最博学的图书官</h2>
+<p>塌掉的那座桥，叫石桥。</p>
+<p>奇怪的是，就在三个月前，石桥刚刚通过了王国最严格的安全检查。</p>
+<p>国王大怒。他召集了国内最博学的人。</p>
+<p>第一个到的是皇家图书官。</p>
+<p>他带来了四十七份文书。</p>
+<p>「陛下，」他开口道，「根据《桥梁养护守则》第十三卷，石桥所用的石料符合全部规格要求。根据《年度检查记录》第八卷，它的承载力在允许范围内。而根据三个月前的那份检查报告，没有发现可见的结构裂缝。」</p>
+<p>国王问：</p>
+<p>「那桥为什么塌了？」</p>
+<p>图书官沉默了。</p>
+<p>「我只能把文书上写的东西，告诉陛下。」</p>
+<p>国王叹了口气。</p>
+<p>第二天，他召见了王国最好的工程师。</p>
+<p>调查了七天之后，工程师回来了。</p>
+<p>「陛下，坍塌可能是因为河水逐渐冲走了桥基下面的泥土。」</p>
+<p>「为什么检查时没有发现？」国王追问。</p>
+<p>「因为负责检查桥梁结构的人，不负责检查河床。」</p>
+<p>「那么负责河床的人呢？」</p>
+<p>「他们确实注意到河床在变深。但他们认为，自己的职责只是通知水务署。」</p>
+<p>「水务署怎么说？」</p>
+<p>「他们报告说，河水没有超过规定的警戒水位。」</p>
+<p>国王沉默了很久。</p>
+<p>每个人都正确地履行了自己的职责。</p>
+<p>可是，桥还是塌了。</p>
+<h2 id="第二章-老织网人">第二章　老织网人</h2>
+<p>几天之后，一位老人来到王宫。</p>
+<p>他既不是工程师，也不是图书官。</p>
+<p>他只是一个织渔网的老人。</p>
+<p>老人说：</p>
+<p>「陛下，我可以帮您，让您的桥不再塌。」</p>
+<p>国王看着他粗糙开裂的双手，笑了。</p>
+<p>「连我最好的工程师都做不到。你凭什么认为，一个织网的人能做到？」</p>
+<p>老人没有回答。</p>
+<p>他只请求三样东西：</p>
+<p>一间空屋、一千根线，以及阅读皇家藏书楼里任何东西的许可。</p>
+<p>国王准了。</p>
+<p>从那天起，老人就在那间空屋里工作。</p>
+<p>他把每一座桥的名字，写在一块木牌上。</p>
+<p>他又做了别的木牌：河流、建材、匠人、养护记录、天气、事故。</p>
+<p>然后他开始用线，把它们连起来。</p>
+<p>每座桥，连接到建造它所用的材料。</p>
+<p>每种材料，连接到开采它的采石场。</p>
+<p>每座采石场，连接到它自己的质量事故史。</p>
+<p>桥基，连接到它下面的河床。</p>
+<p>河床，连接到上游的水坝。</p>
+<p>水坝，连接到它们每年的放水计划。</p>
+<p>渐渐地，整个房间变成了一张庞大而繁复的网。</p>
+<p>国王第一次来看的时候，非常失望。</p>
+<p>「你所做的，不过是把我书里的信息拿出来，用绳子连起来。」</p>
+<p>老人点点头。</p>
+<p>「确实如此，陛下。」</p>
+<p>「那有什么用？」</p>
+<p>老人指向一块写着「白鹭桥」的木牌。</p>
+<p>「陛下，我建议派人去检查这座桥。」</p>
+<p>国王翻开最新的检查报告。</p>
+<p>「白鹭桥上个月才检查过。每一项测量都正常。」</p>
+<p>「我知道。」老人回答。</p>
+<p>「那为什么还要再查一遍？」</p>
+<p>「因为建造白鹭桥的那位匠人，也曾参与修建石桥的一部分桥基。两座桥用的是同一种基础工法。而且，它们下游的河床，都受到三年前建成的那座水坝运行的影响。」</p>
+<p>国王立刻下令检查。</p>
+<p>果然，白鹭桥的桥基已经开始变弱。</p>
+<p>只是桥身本身，还没有出现可见的裂缝。</p>
+<p>国王震惊了。</p>
+<p>「你是在书里，发现了什么别人都不知道的秘密吗？」</p>
+<p>老人摇头。</p>
+<p>「没有。每一个事实，都已经写在您的藏书楼里。」</p>
+<p>「那你到底发现了什么？」</p>
+<p>老人回答：</p>
+<p>「陛下，您的人保存了事实。但他们没有保存事实之间的关系。」</p>
+<h2 id="第三章-从未出过事的桥">第三章　从未出过事的桥</h2>
+<p>国王大喜。</p>
+<p>他命老人把王国的每一座桥都连起来。</p>
+<p>一年之后，千桥之国拥有了一张非凡的、彼此连通的知识网络。</p>
+<p>老人现在能回答那些从前看似不可能的问题。</p>
+<p>「如果上游水坝比计划提前放水，哪些桥可能需要额外检查？」</p>
+<p>「如果某个采石场被发现供过有问题的石料，哪些桥可能受影响？」</p>
+<p>「如果王国最有经验的匠人退休了，哪些桥可能失去关键的养护技艺？」</p>
+<p>国王相信，自己终于掌控了所有可能的答案。</p>
+<p>他颁布了一道敕令：</p>
+<p>「自今日起，一切关于桥梁的决定，都必须遵照这张大网的指引。」</p>
+<p>起初，王国蒸蒸日上。</p>
+<p>直到有一天，国王决定造一种全新的桥。</p>
+<p>与传统的桥不同，这一座没有石柱支撑桥面。</p>
+<p>取而代之的是，用巨大的铁链，把它悬在两座悬崖之间。</p>
+<p>年轻的工程师们相信，这种新设计能让王国跨过从前无法通过的深谷。</p>
+<p>国王去请教老人的网。</p>
+<p>「这座桥安全吗？」</p>
+<p>老人在无数根线之间翻找。</p>
+<p>过了很久，他答道：</p>
+<p>「陛下，我们的记录里，没有这类桥的事故史。」</p>
+<p>国王笑了。</p>
+<p>「太好了！如果没有记录在案的事故，那想必就是安全的。」</p>
+<p>忽然，老人拿出一把剪刀。</p>
+<p>剪断了一根线。</p>
+<p>国王勃然大怒。</p>
+<p>「你为什么要破坏我的网？」</p>
+<p>老人回答：</p>
+<p>「因为，陛下，有些联系本来就不该连上。」</p>
+<p>他继续说：</p>
+<p>「您把『没有危险的证据』，当成了『安全的证据』。这是完全不同的两件事。」</p>
+<p>国王盯着他。</p>
+<p>「你的意思是，你这张大网，也会错？」</p>
+<p>「当然。」</p>
+<p>「一张网可以显示我们知道什么。它也可以显示我们不知道什么。但如果我们把每一处空白，都用一个编造的联系填满，我们造出的东西，就非常危险。」</p>
+<p>老人停顿了一下。</p>
+<p>「一个漂亮而令人信服的谎言。」</p>
+<h2 id="第四章-最后一根线">第四章　最后一根线</h2>
+<p>国王没有说话。</p>
+<p>老人拿起三块木牌。</p>
+<p>第一块写着：</p>
+<blockquote>
+<p>石桥塌了。</p>
+</blockquote>
+<p>第二块：</p>
+<blockquote>
+<p>河床一直在稳步加深。</p>
+</blockquote>
+<p>第三块：</p>
+<blockquote>
+<p>上游水坝改变了放水计划。</p>
+</blockquote>
+<p>他把木牌放在桌上，用线连起来。</p>
+<p>但在它们之间，他多放了一块木牌。</p>
+<p>那块牌，是空白的。</p>
+<p>「它代表什么？」国王问。</p>
+<p>「一条未经证实的因果联系。」</p>
+<p>「为什么不干脆直接连起来？」</p>
+<p>「因为两件事同时发生，并不必然意味着其中一件导致了另一件。」</p>
+<p>老人又拿起两块木牌。</p>
+<p>一块写着：</p>
+<blockquote>
+<p>有证据支持。</p>
+</blockquote>
+<p>另一块写着：</p>
+<blockquote>
+<p>基于专家判断。</p>
+</blockquote>
+<p>「陛下，这不是同一类联系。一块告诉我们，现有证据支持什么。另一块告诉我们，某个人凭经验和判断，推断了什么。」</p>
+<p>终于，国王开始明白了。</p>
+<p>他曾相信，王国掌握的知识越多，做出的决定就越准确。</p>
+<p>后来他又相信，把这些知识全部连起来，就自然会产生更好的答案。</p>
+<p>现在，他认识到了第三项、也更困难的要求。</p>
+<p>人必须明白：每一个关系，为什么被认为是真的；在什么条件下，它仍然成立；以及它什么时候，可能不再成立。</p>
+<p>从那天起，千桥之国保留了他们那张壮丽的网。</p>
+<p>但国王立下了三条新法：</p>
+<ol type="1">
+<li>每一条重要的联系，都必须有可追溯的来源。</li>
+<li>每一条未经证实的推断，都必须明确标明。</li>
+<li>每当世界发生变化，已有的联系都必须重新审视。</li>
+</ol>
+<p>很多年后，有人问那位老织网人：</p>
+<p>「你最伟大的发明是什么？是那张宏伟的网吗？」</p>
+<p>老人笑了。</p>
+<p>「不是。」</p>
+<p>「那是什么？」</p>
+<p>老人望向窗外。晨雾里，一座新桥正在缓缓成形。</p>
+<p>「是教会人们：一张地图，可以告诉我们怎样到达目的地；但它不能代替我们判断——脚下的路，是否真的存在。」</p>
+<hr />
+<h1 id="寓言背后的研究生级概念">寓言背后的研究生级概念</h1>
+<p>这个故事说明了几个密切相关的概念：</p>
+<p>认知推理（Epistemic Reasoning）、知识溯源（Knowledge
+Provenance），以及知识图谱中的开放世界假设（Open-World
+Assumption）。</p>
+<p>这些概念属于更广阔的「知识表示与推理」（Knowledge Representation and
+Reasoning）领域，涉及人工智能、计算机科学、形式逻辑与认识论。</p>
+<h2
+id="一为什么一个系统信息齐全却仍可能给不出正确答案">一、为什么一个系统信息齐全，却仍可能给不出正确答案？</h2>
+<p>皇家图书官拥有大量文书，却无法判断桥为什么塌。</p>
+<p>这说明传统信息检索有一种根本性的局限：</p>
+<p>找到相关信息，并不等于理解系统性关系，也不等于能对关系的后果进行推理。</p>
+<p>知识图谱（Knowledge Graph，KG）不只是存储事实。</p>
+<p>它显式地表示实体之间的关系。</p>
+<p>举例来说，一张示意性的知识图谱，可以让系统沿着相连的实体，追踪依赖关系与潜在的下游影响。但这些关系及其有效性，仍然需要证据。</p>
+<p>当上游水坝改变运行计划，系统可以沿着这些关系遍历，找出可能受影响的桥。</p>
+<p>这就是图遍历（Graph Traversal）与依赖分析（Dependency
+Analysis）的价值。</p>
+<p>它不是在检索孤立的文书，而是在相互连接的实体之间，做结构化的排查。</p>
+<p>然而，一条关系的存在，并不自动确立因果关系，也不足以为某个结论提供依据。</p>
+<p>这个区别，引出下一个概念。</p>
+<h2
+id="二为什么老织网人拒绝宣布新桥是安全的">二、为什么老织网人拒绝宣布新桥是安全的？</h2>
+<p>这体现了一条重要的逻辑原则：</p>
+<p>开放世界假设（Open-World Assumption，OWA）。</p>
+<p>在开放世界假设下：</p>
+<blockquote>
+<p>一个事实不在知识库中，并不意味着它是假的。</p>
+</blockquote>
+<p>看三种说法：</p>
+<ul>
+<li>已知：白鹭桥的桥基有问题。</li>
+<li>未知：新建的悬索桥，可能有、也可能没有桥基问题。</li>
+<li>无效结论：因为没有记录到问题，所以新建的悬索桥没有桥基问题。</li>
+</ul>
+<p>与封闭世界假设对比，这个区别更清楚。</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>维度</th>
+<th>封闭世界假设（CWA）</th>
+<th>开放世界假设（OWA）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td data-label="维度">基本原则</td>
+<td data-label="封闭世界假设（CWA）">在一个被界定为完整的领域内，未被记录的事实可以视为假</td>
+<td data-label="开放世界假设（OWA）">未被记录的事实，仍然属于未知</td>
+</tr>
+<tr>
+<td data-label="维度">典型应用</td>
+<td data-label="封闭世界假设（CWA）">事务数据库、完整的运营清单、封闭规则系统</td>
+<td data-label="开放世界假设（OWA）">语义网、知识表示、知识不完备的领域</td>
+</tr>
+<tr>
+<td data-label="维度">主要风险</td>
+<td data-label="封闭世界假设（CWA）">把「信息缺失」误当成「负面事实」</td>
+<td data-label="开放世界假设（OWA）">难以从不完备的知识中，得出确定结论</td>
+</tr>
+<tr>
+<td data-label="维度">例子</td>
+<td data-label="封闭世界假设（CWA）">在一本完整的账簿里，没有付款记录，就意味着没有记录过付款</td>
+<td data-label="开放世界假设（OWA）">没有记录到桥的缺陷，并不证明没有缺陷</td>
+</tr>
+</tbody>
+</table>
+<p>许多语义网（Semantic Web）与基于 OWL
+的知识表示系统，都运行在开放世界语义之下。</p>
+<p>然而，企业系统往往需要同时采用两种取向。</p>
+<p>比如，一本完整的事务账簿，在「是否记录过某笔交易」这一点上，采用封闭世界推理是合理的。</p>
+<p>但在表示复杂系统依赖关系的知识图谱里，可能需要开放世界推理，因为并非每一条依赖、每一种可能的影响，都已被记录。</p>
+<p>因此，OWA 与 CWA
+之间的选择，是一个架构与语义层面的决定，而不只是技术实现细节。</p>
+<h2
+id="三更深的概念为什么关系必须有证据">三、更深的概念：为什么关系必须有证据？</h2>
+<p>最重要的教训，出现在故事结尾。</p>
+<p>老织网人此时做的，已经不只是收集信息，也不只是建立关系。</p>
+<p>他在区分三种根本不同的东西。</p>
+<p><strong>事实</strong></p>
+<p>测得的河床深度，发生了变化。</p>
+<p><strong>推断</strong></p>
+<p>河床的变化，可能削弱了桥基。</p>
+<p><strong>论证依据</strong></p>
+<p>水文测量、工程原理与现场检查，支持或质疑这一推断。</p>
+<p>在一个先进的 AI 系统中，给出结论是不够的。</p>
+<p>系统还应能说明：</p>
+<ul>
+<li><strong>证据</strong>：哪些来源文书或观察，支持这个结论？</li>
+<li><strong>推断</strong>：哪些关系是明确建立的，哪些是推断出来的？</li>
+<li><strong>语境</strong>：这些关系，在什么条件、什么时期、什么业务规则下成立？</li>
+<li><strong>不确定性</strong>：还有哪些未知，或未经充分验证？</li>
+<li><strong>可推翻性</strong>：什么新证据，可以否定或推翻这个结论？</li>
+</ul>
+<p>这些要求，与若干前沿研究方向相连。</p>
+<h3 id="知识溯源knowledge-provenance">知识溯源（Knowledge
+Provenance）</h3>
+<p>知识溯源，关注信息与断言的来源、脉络与支撑证据。</p>
+<p>例如，系统可以记录：某条关系，是从一份经批准的工程文书中抽取的、是从测量数据推断的，还是由领域专家验证过的。</p>
+<p>它让使用者能够评估结论的可信度与可追溯性。</p>
+<h3 id="可推翻推理defeasible-reasoning">可推翻推理（Defeasible
+Reasoning）</h3>
+<p>可推翻推理，是一种非单调推理：当新信息出现时，结论可以被撤回。</p>
+<p>例如：</p>
+<p>初始结论：</p>
+<p>「这座桥大概是安全的，因为上次检查没有发现结构缺陷。」</p>
+<p>新证据：</p>
+<p>「上游水坝最近改变了运行计划，河床侵蚀正在加速。」</p>
+<p>修正后的结论：</p>
+<p>「先前的安全评估，可能已经不再充分。」</p>
+<p>重要的是，原来的检查结果，并不必然变成假的。</p>
+<p>变的是「依赖那个结果」的理由。</p>
+<p>这个区别，是在动态、不确定的环境中推理的核心。</p>
+<h3 id="不确定性管理">不确定性管理</h3>
+<p>一个成熟的知识系统，必须区分：</p>
+<ul>
+<li>有证据确立的。</li>
+<li>以不同程度的置信推断出来的。</li>
+<li>仍然未知的。</li>
+<li>被现有证据反驳的。</li>
+</ul>
+<p>知识图谱可以通过显式的元数据、溯源关系、时间限定词和相应的推理机制，来表示这些区别。</p>
+<p>但这些能力，不会仅仅因为信息以图的形式存储，就自动出现。它们必须被有意地设计进知识表示与推理架构之中。</p>
+<h2 id="四最重要的洞见">四、最重要的洞见</h2>
+<p>传统信息系统试图回答：</p>
+<p>「我们知道什么？」</p>
+<p>知识图谱更进一步：</p>
+<p>「我们所知道的东西之间，是怎样连接的？」</p>
+<p>一个成熟、可信的知识系统，必须回答一个更难的问题：</p>
+<p>「我们为什么相信这些联系是成立的？在什么情况下，我们应该不再相信它们？」</p>
+<p>这三个问题，对应三种不同层级的能力：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>层级</th>
+<th>能力</th>
+<th>核心问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td data-label="层级">1</td>
+<td data-label="能力">信息检索</td>
+<td data-label="核心问题">有哪些信息可用？</td>
+</tr>
+<tr>
+<td data-label="层级">2</td>
+<td data-label="能力">知识表示</td>
+<td data-label="核心问题">事实与实体之间如何关联？</td>
+</tr>
+<tr>
+<td data-label="层级">3</td>
+<td data-label="能力">认知推理与治理</td>
+<td data-label="核心问题">我们凭什么相信一个结论？什么时候应该重新审视它？</td>
+</tr>
+</tbody>
+</table>
+<p>这个区别，是根本性的。</p>
+<p>一个系统可以拥有数百万份文书，却不理解它们之间的关系。</p>
+<p>它可以表示数百万条关系，却不能区分经证实的知识与没有依据的假设。</p>
+<p>它也可以给出极有说服力的结论，却对自己知识的边界，一无所知。</p>
+<p>老织网人最终发现，无知本身，并不是最大的危险。</p>
+<p>最大的危险，是一个无法区分「它知道什么」「它只是相信什么」和「它还不知道什么」的系统。</p>
+<p>这正是从传统信息检索，走向可信、有证据基础的 AI
+推理时，最重要的挑战之一。</p>
+<h3 id="最后一点">最后一点</h3>
+<p>国王从藏书楼开始，因为他相信，收集知识可以避免犯错。</p>
+<p>他拥抱那张大网，因为他相信，连接知识就能揭示真相。</p>
+<p>但他真正变得智慧，是因为他明白：即便最精密的知识系统，也必须对不确定性、矛盾与修正，保持开放。</p>
+<p>一个真正智能的系统，不是永远都有答案的系统。而是知道自己凭什么给出答案、认清自身知识的边界、并在证据改变时敢于改变结论的系统。</p>
+<hr />
+<p><em>© 2026 Lai Yew Fai。以 <a href="LICENSE.md">CC BY-NC 4.0</a>
+授权——可自由分享与改编用于非商业用途，须注明出处。</em></p>
+</div>
 </main>
 <footer>
-  <p>The Kingdom of a Thousand Bridges — a fable about knowledge, judgment, and truth.</p>
-  <p>© 2026 Lai Yew Fai · <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a> · <a href="https://github.com/laiyewfai/kingdom-of-a-thousand-bridges">Source on GitHub</a></p>
+  <p class="len">The Kingdom of a Thousand Bridges — a fable about knowledge, judgment, and truth.</p>
+  <p class="lzh">千桥之国 —— 一则关于知识、判断与真相的寓言。</p>
+  <p class="len">© 2026 Lai Yew Fai · <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a> · <a href="https://github.com/laiyewfai/kingdom-of-a-thousand-bridges">Source on GitHub</a></p>
+  <p class="lzh">© 2026 Lai Yew Fai · <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a> · <a href="https://github.com/laiyewfai/kingdom-of-a-thousand-bridges">GitHub 源码</a></p>
 </footer>
+<script>
+  var root = document.documentElement;
+  var buttons = document.querySelectorAll('.lang-switch button');
+  var TITLES = {
+    en: 'The Kingdom of a Thousand Bridges — A Fable About Knowledge, Judgment, and Truth',
+    zh: '千桥之国 —— 一则关于知识、判断与真相的寓言'
+  };
+  function applyLang(lang) {
+    root.lang = lang;
+    document.title = TITLES[lang] || TITLES.en;
+    buttons.forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+  }
+  var saved = null;
+  try { saved = localStorage.getItem('kingdom-lang'); } catch (e) {}
+  applyLang(saved === 'zh' ? 'zh' : 'en');
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      applyLang(b.getAttribute('data-lang'));
+      try { localStorage.setItem('kingdom-lang', root.lang); } catch (e) {}
+    });
+  });
+</script>
 </body>
 </html>
