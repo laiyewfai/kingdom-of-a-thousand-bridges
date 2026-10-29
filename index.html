@@ -63,19 +63,25 @@ h1{
   letter-spacing:-.02em; margin:0 0 .6rem; text-align:center; text-wrap:balance;
 }
 .lzh h1{letter-spacing:.04em}
-h1 + h3{
+/* The subtitle sits under the title. It used to be an <h3>, which skipped a
+   heading level (h1 → h3) and broke the document outline for screen readers.
+   Semantics fixed here; the look is unchanged. */
+.subtitle p{
   font-size:1.02rem; font-weight:400; font-style:italic; color:var(--muted);
-  text-align:center; margin:0 0 3.5rem; letter-spacing:.01em; text-wrap:balance;
+  text-align:center; margin:0 0 3.5rem; letter-spacing:.01em; text-wrap:pretty;
 }
-.lzh h1 + h3{font-style:normal; letter-spacing:.12em}
+.lzh .subtitle p{font-style:normal; letter-spacing:.12em}
 h2{
   font-size:.82rem; font-weight:600; text-transform:uppercase;
   letter-spacing:.16em; color:var(--accent); text-align:center;
   margin:4.5rem 0 2.2rem; padding-top:2.2rem; border-top:1px solid var(--rule);
+  text-wrap:balance;
 }
 .lzh h2{letter-spacing:.18em; font-size:.92rem}
 h3{font-size:1.12rem; font-weight:600; margin:2.8rem 0 .8rem; letter-spacing:-.01em}
-p{margin:0 0 1.25rem}
+/* pretty breaks pull a single word back up, so body copy stops ending on a
+   one-word last line. Chrome and Safari honour it; older engines ignore it. */
+p{margin:0 0 1.25rem; text-wrap:pretty}
 hr{border:0; border-top:1px solid var(--rule); margin:4rem 0}
 /* the English fable opens with a drop cap; CJK has no drop-cap tradition */
 .len > p:first-of-type::first-letter{
@@ -92,7 +98,7 @@ blockquote p{margin:0}
 blockquote p + p{margin-top:.8rem}
 strong{font-weight:600}
 ul,ol{margin:0 0 1.25rem; padding-left:1.4rem}
-li{margin:.35rem 0}
+li{margin:.35rem 0; text-wrap:pretty}
 li::marker{color:var(--accent)}
 table{
   border-collapse:collapse; width:100%; margin:2rem 0; font-size:.94rem;
@@ -154,8 +160,9 @@ footer{
 <div class="len" lang="en">
 <h1 id="the-kingdom-of-a-thousand-bridges">The Kingdom of a Thousand
 Bridges</h1>
-<h3 id="a-fable-about-knowledge-judgment-and-truth">A Fable About
-Knowledge, Judgment, and Truth</h3>
+<div class="subtitle">
+<p>A Fable About Knowledge, Judgment, and Truth</p>
+</div>
 <p>Long ago, there was a kingdom known as the Kingdom of a Thousand
 Bridges.</p>
 <p>The kingdom had exactly one thousand bridges.</p>
@@ -642,8 +649,9 @@ attribution.</em></p>
 
 <div class="lzh" lang="zh-Hans">
 <h1 id="千桥之国">千桥之国</h1>
-<h3
-id="一则关于知识判断与真相的寓言">一则关于知识、判断与真相的寓言</h3>
+<div class="subtitle">
+<p>一则关于知识、判断与真相的寓言</p>
+</div>
 <p>很久以前，有一个王国，叫千桥之国。</p>
 <p>王国里正好有一千座桥。石桥、木桥、铁桥，还有横跨深谷的悬索桥。每一座桥都有自己的来历：有的已经站了三百年，有的刚刚落成。</p>
 <p>但国王最引以为傲的，不是这些桥。</p>

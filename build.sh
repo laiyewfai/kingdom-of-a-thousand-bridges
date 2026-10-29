@@ -81,19 +81,25 @@ h1{
   letter-spacing:-.02em; margin:0 0 .6rem; text-align:center; text-wrap:balance;
 }
 .lzh h1{letter-spacing:.04em}
-h1 + h3{
+/* The subtitle sits under the title. It used to be an <h3>, which skipped a
+   heading level (h1 → h3) and broke the document outline for screen readers.
+   Semantics fixed here; the look is unchanged. */
+.subtitle p{
   font-size:1.02rem; font-weight:400; font-style:italic; color:var(--muted);
-  text-align:center; margin:0 0 3.5rem; letter-spacing:.01em; text-wrap:balance;
+  text-align:center; margin:0 0 3.5rem; letter-spacing:.01em; text-wrap:pretty;
 }
-.lzh h1 + h3{font-style:normal; letter-spacing:.12em}
+.lzh .subtitle p{font-style:normal; letter-spacing:.12em}
 h2{
   font-size:.82rem; font-weight:600; text-transform:uppercase;
   letter-spacing:.16em; color:var(--accent); text-align:center;
   margin:4.5rem 0 2.2rem; padding-top:2.2rem; border-top:1px solid var(--rule);
+  text-wrap:balance;
 }
 .lzh h2{letter-spacing:.18em; font-size:.92rem}
 h3{font-size:1.12rem; font-weight:600; margin:2.8rem 0 .8rem; letter-spacing:-.01em}
-p{margin:0 0 1.25rem}
+/* pretty breaks pull a single word back up, so body copy stops ending on a
+   one-word last line. Chrome and Safari honour it; older engines ignore it. */
+p{margin:0 0 1.25rem; text-wrap:pretty}
 hr{border:0; border-top:1px solid var(--rule); margin:4rem 0}
 /* the English fable opens with a drop cap; CJK has no drop-cap tradition */
 .len > p:first-of-type::first-letter{
@@ -110,7 +116,7 @@ blockquote p{margin:0}
 blockquote p + p{margin-top:.8rem}
 strong{font-weight:600}
 ul,ol{margin:0 0 1.25rem; padding-left:1.4rem}
-li{margin:.35rem 0}
+li{margin:.35rem 0; text-wrap:pretty}
 li::marker{color:var(--accent)}
 table{
   border-collapse:collapse; width:100%; margin:2rem 0; font-size:.94rem;

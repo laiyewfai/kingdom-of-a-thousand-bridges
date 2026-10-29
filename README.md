@@ -1,6 +1,8 @@
 # The Kingdom of a Thousand Bridges
 
-### A Fable About Knowledge, Judgment, and Truth
+::: subtitle
+A Fable About Knowledge, Judgment, and Truth
+:::
 
 Long ago, there was a kingdom known as the Kingdom of a Thousand Bridges.
 
